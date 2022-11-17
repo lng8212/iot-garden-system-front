@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">IOTGradenSystem</string>
+    <string name="app_name">IOTGardenSystem</string>
+    <string name="pump">Pump</string>
+    <string name="stop_pump">Stop pump</string>
+    <string name="auto">Auto</string>
+    <string name="humanity">Humanity</string>
+    <string name="soil_moisture">Soil Moisture</string>
+    <string name="temperature">Temperature</string>
 </resources>
