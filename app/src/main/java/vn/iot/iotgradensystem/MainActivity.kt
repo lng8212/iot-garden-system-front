@@ -85,10 +85,8 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 localIsPump = snapshot.value as Boolean
             }
-
             override fun onCancelled(error: DatabaseError) {
             }
-
         })
         humanity?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -117,7 +115,6 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-
         })
         temperature?.addValueEventListener(object : ValueEventListener {
             @SuppressLint("SetTextI18n")

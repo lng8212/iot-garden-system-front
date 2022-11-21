@@ -35,13 +35,94 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/llHumidityPumpInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="200dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llAuto">
+
+        <TextView
+            android:id="@+id/txtHumidityPumpInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/humanity_pump"
+            android:textSize="20sp" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="30"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llSoilMoistureInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llHumidityPumpInfo">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/soil_moisture_pump"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/txtSoilMoistureInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            tools:hint="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llTemperatureInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llSoilMoistureInfo">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/temperature_pump"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/txtTemperatureInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            tools:hint="29.3" />
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/llHumanity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/llAuto">
+        app:layout_constraintTop_toBottomOf="@id/llTemperatureInfo">
 
         <TextView
             android:layout_width="0dp"
