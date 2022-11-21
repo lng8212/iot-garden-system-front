@@ -6,7 +6,7 @@
     <string name="humanity">Humanity</string>
     <string name="humanity_pump">Humidity starts pumping</string>
     <string name="soil_moisture">Soil Moisture</string>
-    <string name="soil_moisture_pump">Soil Moisture starts pumping</string>
     <string name="temperature">Temperature</string>
     <string name="temperature_pump">Temperature starts pumping</string>
+    <string name="soil_moisture_pump">Set soil moisture pump</string>
 </resources>
