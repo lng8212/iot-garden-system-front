@@ -20,6 +20,8 @@ import vn.iot.iotgradensystem.repository.MainRepository
 import vn.iot.iotgradensystem.retrofit.RetrofitService
 import vn.iot.iotgradensystem.viewmodel.MainViewModel
 import vn.iot.iotgradensystem.viewmodel.MyViewModelFactory
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private var humanity: DatabaseReference? = null
     private var soilMoisture: DatabaseReference? = null
     private var temperature: DatabaseReference? = null
+    private var light: DatabaseReference? = null
     private var localIsPump = false
     private var currentHumanity: Long? = null
     private var humanityPre: String? = null
@@ -44,11 +47,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initDatabase()
         fetchData()
+        initDate()
         initForecast()
         setOnClick()
 
     }
 
+
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
+    private fun initDate() {
+        val calendar: Calendar = Calendar.getInstance()
+        binding.txtTime.text = "${SimpleDateFormat("EEEE").format(calendar.time)}, ${
+            SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
+        }"
+    }
 
     private fun initForecast() {
         val retrofitService = RetrofitService.getInstance()
@@ -58,7 +70,20 @@ class MainActivity : AppCompatActivity() {
             MyViewModelFactory(mainRepository)
         )[MainViewModel::class.java]
         viewModel.data.observe(this) {
-            binding.txtForecast.text = "Today's weather forecast may be ${it.weather}"
+            when (it.weather) {
+                "rain" -> {
+                    binding.anim.apply {
+                        setAnimation(R.raw.rain)
+                        playAnimation()
+                    }
+                }
+                "snow" -> {
+                    binding.anim.apply {
+                        setAnimation(R.raw.snow)
+                        playAnimation()
+                    }
+                }
+            }
         }
 
     }
@@ -79,7 +104,11 @@ class MainActivity : AppCompatActivity() {
         binding.swAuto.setOnClickListener {
             if (binding.swAuto.isChecked) {
                 isAuto.setValue(true)
-            } else isAuto.setValue(false)
+                binding.btnPump.isClickable = false
+            } else {
+                isAuto.setValue(false)
+                binding.btnPump.isClickable = true
+            }
         }
 
         binding.btnSetAutoPump.setOnClickListener {
@@ -98,9 +127,11 @@ class MainActivity : AppCompatActivity() {
         databaseAndroid = Firebase.database.reference.child("Android")
         isPump = databaseAndroid.child("isPump")
         isAuto = databaseAndroid.child("isAuto")
+
         soilMoisturePump = databaseAndroid.child("soilMoisturePump")
         databaseESP = Firebase.database.reference.child("ESP")
         humanity = databaseESP.child("humanity")
+        light = databaseESP.child("isLight")
         soilMoisture = databaseESP.child("soilMoisture")
         temperature = databaseESP.child("temperature")
     }
@@ -133,6 +164,18 @@ class MainActivity : AppCompatActivity() {
 
             }
         })
+        light?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val value = snapshot.value.toString()
+                val string = if (value == "true") "Day" else "Night"
+                binding.txtLight.text = string
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
         soilMoisture?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 binding.txtSoilMoisture.text = snapshot.value.toString()
@@ -150,7 +193,7 @@ class MainActivity : AppCompatActivity() {
         temperature?.addValueEventListener(object : ValueEventListener {
             @SuppressLint("SetTextI18n")
             override fun onDataChange(snapshot: DataSnapshot) {
-                binding.txtTemperature.text = "${snapshot.value.toString()}°C"
+                binding.txtTemperature.text = "${snapshot.value.toString()}°"
                 temperaturePre = snapshot.value.toString()
             }
 

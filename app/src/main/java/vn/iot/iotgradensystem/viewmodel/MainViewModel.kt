@@ -18,20 +18,21 @@ class MainViewModel constructor(private val mainRepository: MainRepository) : Vi
 
     fun getData(temperature: String, humidity: String) {
         viewModelScope.launch {
-            val response = mainRepository.getData(temperature, humidity)
-            withContext(Dispatchers.Main) {
-                try {
+
+            try {
+                val response = mainRepository.getData(temperature, humidity)
+                withContext(Dispatchers.Main) {
                     if (response.isSuccessful) {
                         _data.value = response.body()
                     } else Log.e("getdata", "getData: ${response}")
-                } catch (e: Exception) {
-                    Log.e("getdata", "getData: ${e.stackTrace}")
                 }
-
+            } catch (e: Exception) {
+                Log.e("getdata", "getData: ${e.stackTrace}")
             }
-        }
 
+        }
     }
 
-
 }
+
+
